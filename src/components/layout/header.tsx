@@ -18,7 +18,7 @@ function classNames(...classes: any) {
 
 const Header = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-black border-b border-white mb-5">
       {({ open }) => (
         <>
           <Container>
@@ -36,20 +36,17 @@ const Header = () => {
                 <div className="hidden sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <Link to={item?.href}>
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "rounded-md px-3 py-2 text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </a>
+                      <Link
+                        to={item?.href}
+                        key={item.name}
+                        className={classNames(
+                          item.current
+                            ? "bg-stone-900 text-white"
+                            : "text-gray-300 hover:bg-stone-900 hover:text-white",
+                          "rounded-md px-3 py-2 text-sm font-medium"
+                        )}
+                      >
+                        {item.name}
                       </Link>
                     ))}
                   </div>
@@ -59,7 +56,7 @@ const Header = () => {
                 <Link to={"/cart"}>
                   <button
                     type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative rounded-full bg-stone-900 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
