@@ -18,7 +18,7 @@ function classNames(...classes: any) {
 }
 
 const Header = () => {
-  const { openCart } = useCart();
+  const { totalCount, openCart } = useCart();
 
   return (
     <Disclosure as="nav" className="bg-black border-b border-white mb-5">
@@ -55,7 +55,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="relative flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   onClick={openCart}
                   type="button"
@@ -63,6 +63,9 @@ const Header = () => {
                 >
                   <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
+                <span className="absolute bg-red-700 top-2 -right-3 text-sm px-1.5 rounded-full">
+                  {totalCount}
+                </span>
               </div>
             </div>
           </Container>
