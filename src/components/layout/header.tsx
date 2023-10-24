@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import Container from "../ui/Container";
+import { useCart } from "../../context/useCart";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -17,6 +18,8 @@ function classNames(...classes: any) {
 }
 
 const Header = () => {
+  const { openCart } = useCart();
+
   return (
     <Disclosure as="nav" className="bg-black border-b border-white mb-5">
       {({ open }) => (
@@ -53,14 +56,13 @@ const Header = () => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <Link to={"/cart"}>
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-stone-900 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </Link>
+                <button
+                  onClick={openCart}
+                  type="button"
+                  className="relative rounded-full bg-stone-900 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                >
+                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
               </div>
             </div>
           </Container>
