@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { useLocalStore } from "../hooks/useLocalStore";
 
 interface UseCartProviderType {
   children: ReactNode;
@@ -21,6 +22,7 @@ interface useCartType {
   ) => void;
   removeToCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
+  getIteQuantity: (id: number) => number;
 }
 
 export interface useCartItemType {
@@ -45,7 +47,7 @@ const useCart = () => {
 };
 
 const UseCartProvider: React.FC<UseCartProviderType> = ({ children }) => {
-  const [cart, setCart] = useState<useCartItemType[]>([]);
+  const [cart, setCart] = useLocalStore("shopping-cart", []);
   const [isOpen, setIsOpen] = useState(false);
 
   const cartLength = cart.length;
@@ -83,6 +85,10 @@ const UseCartProvider: React.FC<UseCartProviderType> = ({ children }) => {
     setCart(updateItem);
   };
 
+  const getIteQuantity = (id: number): number => {
+    return cart.find((item) => item?.id === id)?.quantity || 0;
+  };
+
   return (
     <CartCreate.Provider
       value={{
@@ -95,6 +101,7 @@ const UseCartProvider: React.FC<UseCartProviderType> = ({ children }) => {
         addToCart,
         removeToCart,
         updateQuantity,
+        getIteQuantity,
       }}
     >
       {children}

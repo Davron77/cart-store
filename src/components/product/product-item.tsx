@@ -14,10 +14,9 @@ interface ProductItemType {
 }
 
 const ProductItem: React.FC<ProductItemType> = (product) => {
-  const [quantity, setQuantity] = useState(1);
-
+  const { addToCart, removeToCart, updateQuantity, getIteQuantity } = useCart();
+  const [quantity, setQuantity] = useState(getIteQuantity(product.id) || 1);
   const { id, name, href, imageSrc, imageAlt, price, color, isCart } = product;
-  const { addToCart, removeToCart, updateQuantity } = useCart();
 
   const handleRemoveToCart = (id: number) => {
     removeToCart(id);
@@ -73,7 +72,7 @@ const ProductItem: React.FC<ProductItemType> = (product) => {
         </div>
       ) : (
         <button
-          onClick={() => addToCart(id, 1, price, imageSrc, name, color)}
+          onClick={() => addToCart(id, quantity, price, imageSrc, name, color)}
           className="bg-green-600 w-full py-2 rounded hover:bg-green-400"
         >
           Add to Cart
