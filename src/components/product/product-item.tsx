@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useCart } from "../../context/useCart";
+import Counter from "../ui/counter";
 
 interface ProductItemType {
   id: number;
@@ -12,9 +14,19 @@ interface ProductItemType {
 }
 
 const ProductItem: React.FC<ProductItemType> = (product) => {
-  const { id, name, href, imageSrc, imageAlt, price, color, isCart } = product;
+  const [quantity, setQuantity] = useState(1);
 
+  const { id, name, href, imageSrc, imageAlt, price, color, isCart } = product;
   const { addToCart, removeToCart } = useCart();
+
+  const handleRemoveToCart = (id: number) => {
+    removeToCart(id);
+    setQuantity(1);
+  };
+
+  useEffect(() => {
+    console.log("quantity:", quantity);
+  }, []);
 
   return (
     <div>
@@ -40,12 +52,23 @@ const ProductItem: React.FC<ProductItemType> = (product) => {
         </div>
       </div>
       {isCart ? (
-        <button
-          onClick={() => removeToCart(id)}
-          className="bg-red-600 w-full py-2 rounded hover:bg-red-400"
-        >
-          Remove to Cart
-        </button>
+        <div className="flex gap-2">
+          <Counter
+            quantity={quantity}
+            setQuantity={setQuantity}
+            onIncrement={() => setQuantity((prev) => +prev + 1)}
+            onDecrement={() =>
+              setQuantity((prev) => (+prev !== 1 ? +prev - 1 : 1))
+            }
+            disableDecrement={quantity === 1}
+          />
+          <button
+            onClick={() => handleRemoveToCart(id)}
+            className="bg-red-600 w-full py-2 rounded hover:bg-red-400"
+          >
+            Remove
+          </button>
+        </div>
       ) : (
         <button
           onClick={() => addToCart(id, 1, price, imageSrc, name, color)}
