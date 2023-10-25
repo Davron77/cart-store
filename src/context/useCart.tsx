@@ -20,6 +20,7 @@ interface useCartType {
     color: string
   ) => void;
   removeToCart: (id: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
 }
 
 export interface useCartItemType {
@@ -71,6 +72,17 @@ const UseCartProvider: React.FC<UseCartProviderType> = ({ children }) => {
     setCart(filter);
   };
 
+  const updateQuantity = (id: number, quantity: number) => {
+    const updateItem = cart?.map((item) => {
+      if (item?.id === id) {
+        return { ...item, quantity };
+      } else {
+        return item;
+      }
+    });
+    setCart(updateItem);
+  };
+
   return (
     <CartCreate.Provider
       value={{
@@ -82,6 +94,7 @@ const UseCartProvider: React.FC<UseCartProviderType> = ({ children }) => {
         closeCart,
         addToCart,
         removeToCart,
+        updateQuantity,
       }}
     >
       {children}

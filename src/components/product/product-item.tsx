@@ -17,7 +17,7 @@ const ProductItem: React.FC<ProductItemType> = (product) => {
   const [quantity, setQuantity] = useState(1);
 
   const { id, name, href, imageSrc, imageAlt, price, color, isCart } = product;
-  const { addToCart, removeToCart } = useCart();
+  const { addToCart, removeToCart, updateQuantity } = useCart();
 
   const handleRemoveToCart = (id: number) => {
     removeToCart(id);
@@ -25,8 +25,10 @@ const ProductItem: React.FC<ProductItemType> = (product) => {
   };
 
   useEffect(() => {
-    console.log("quantity:", quantity);
-  }, []);
+    if (quantity) {
+      updateQuantity(product.id, quantity);
+    }
+  }, [quantity]);
 
   return (
     <div>

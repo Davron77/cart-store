@@ -1,18 +1,20 @@
 import cn from "classnames";
 import MinusIcon from "../icons/minus-icon";
 import PlusIcon from "../icons/plus-icon";
+
 type CounterProps = {
   quantity: number;
-  onDecrement: (e: any) => void;
-  onIncrement: (e: any) => void;
+  onDecrement: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onIncrement: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disableIncrement?: boolean;
   disableDecrement?: boolean;
   variant?: "default" | "dark";
   className?: string;
-  cartButton?: any;
-  setQuantity?: any;
-  addToCartInput?: any;
+  cartButton?: () => void;
+  setQuantity?: (quantity: number) => void;
+  addToCartInput?: (value: string) => void;
 };
+
 const Counter: React.FC<CounterProps> = ({
   quantity,
   onDecrement,
@@ -26,18 +28,18 @@ const Counter: React.FC<CounterProps> = ({
 }) => {
   const size = variant !== "dark" ? "12px" : "10px";
 
-  const handleOnDecrement = (e: any) => {
+  const handleOnDecrement = (e: React.MouseEvent<HTMLButtonElement>) => {
     onDecrement(e);
     cartButton && cartButton();
   };
-  const handleOnIncrement = (e: any) => {
+
+  const handleOnIncrement = (e: React.MouseEvent<HTMLButtonElement>) => {
     onIncrement(e);
     cartButton && cartButton();
   };
 
-  const handleEnterNumber = (e: any) => {
-    setQuantity(e.target.value);
-
+  const handleEnterNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantity && setQuantity(parseInt(e.target.value, 10));
     addToCartInput && addToCartInput(e.target.value);
   };
 
@@ -64,7 +66,6 @@ const Counter: React.FC<CounterProps> = ({
           "font-semibold outline-none text-center h-full transition-colors duration-250 ease-in-out cursor-default text-base text-heading w-16 sm:w-10 lg:w-20 2xl:w-20 text-black"
         )}
       />
-
       <button
         onClick={handleOnIncrement}
         className={cn(
@@ -77,4 +78,5 @@ const Counter: React.FC<CounterProps> = ({
     </div>
   );
 };
+
 export default Counter;

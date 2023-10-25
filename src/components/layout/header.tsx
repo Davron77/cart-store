@@ -8,12 +8,18 @@ import { Link } from "react-router-dom";
 import Container from "../ui/Container";
 import { useCart } from "../../context/useCart";
 
-const navigation = [
+type NavigationItem = {
+  name: string;
+  href: string;
+  current: boolean;
+};
+
+const navigation: NavigationItem[] = [
   { name: "Home", href: "/", current: true },
   { name: "Products", href: "/products", current: false },
 ];
 
-function classNames(...classes: any) {
+function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
